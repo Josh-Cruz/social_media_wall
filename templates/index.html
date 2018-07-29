@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>Login Or Register</title>
+</head>
+
+<body>
+  
+    <h2>Register</h2>
+    <form action='/register' method='POST'>
+        <label for="first_name">First Name:
+            <input type="text" name="first_name" id="first_name">
+        </label>
+        <label for="last_name">Last Name:
+            <input type="text" name="last_name" id="last_name">
+        </label>
+        <label for="email">Email:
+            <input type="text" name="email" id="email">
+        </label>
+        <label for="password">Password:
+            <input type="password" name="password" id="password">
+        </label>
+        <label for="confirm_password">Confirm password:
+            <input type="password" name="confirm_password" id="confirm_password">
+        </label>
+        <input type="submit" value="Add">
+    </form>
+    <h2>Login</h2>
+    <form action='/login' method='POST'>
+        <label for="email">email:
+            <input type="text" name="email" id="email">
+        </label>
+        <label for="password">password:
+            <input type="password" name="password" id="password">
+        </label>
+        <input type="submit" value="Add">
+    </form>
+</body>
+
+</html>
