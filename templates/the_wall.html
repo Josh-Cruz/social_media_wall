@@ -5,37 +5,61 @@
 </head>
 
 <body style = "display: flex; flex-direction:column; justify-content:center;">
-
     <header style = "display: flex; justify-content:flex-start;"> 
         <div style = "margin-left:10px; font-weight: bold;"> Coding Dojo </div>
-        <div style = "margin-left:auto; justify-content:space-around;"> Welcome {{name}} <a href = "127.0.0.1:5000/logout">logout</a></div>
+        <div style = "margin-left:auto; justify-content:space-around;"> Welcome {{session['name']}} <a href = "127.0.0.1:5000/logout">logout</a></div>
     </header>
 
     <form action = "/wall" method='POST'>
-        <input type = "text" placeholder = "Write your message here" style = "width:200px; height: 150px;" name = "message">
+        <input type = "text" placeholder = "Write your message here" style = "width:500px; height: 150px;" name = "message">
         <input type = "submit"name ="submit" value = "add_message">
     </form>
     
     <div>
-    {% for message in messages: %}
-    <ul style ="list-style-type: none;">
-        <li> {{ message['user_id'], message['created_at'] }}</li>
-        <ul style ="list-style-type: none;">
-            <li> {{ message['message'] }}</li>
-        </ul> 
-    </ul>     
-    <hr> 
-    {% endfor %}
-    <hr>
-    </div>
+    <form action="/posts/create" method='post'>
+      <textarea name="content" cols="30" rows="10"></textarea>
+      <input type="submit" value="Add Post">
+    </form>
+  </div>
+  <div class="post-container">
+    <h4>Here are all the posts!</h4>
+    {% if data['posts'] %}
+      {% for post in data['posts'] %}
+        <div class="post">
+          <h5>{{ post['first'] }} {{ post['last'] }} -- {{ post['created_at'] }}</h5>
+          <p>{{ post['content'] }}</p>
+          <div class="comment-container">
+            {% if data['comments'] %}
+              {% for comment in data['comments'] %}
+                {% if comment['post_id'] == post['id'] %}
+                  <div class="comment">
+                    <h6>{{ comment['first'] }} {{ comment['last'] }} -- {{ comment['created_at'] }}</h6>
+                    <p>{{ comment['content'] }}</p>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <form action="/comments/create/{{ post['id'] }}" method="post">
+              <textarea name="content" cols="30" rows="10"></textarea>
+              <input type="submit" value="Add Post">
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
 
-
-    <div>
+      <div>
         <form action = "/wall" method='POST'>
             <input type = "text" placeholder = "Leave a comment here" style = "width:200px; height: 150px;" name = "comment">
             <input type = "submit" name ="submit" value = "add_comment">
         </form>
     </div>
+    <hr>
+    </div>
+
+
+  
 
 </body>
 
